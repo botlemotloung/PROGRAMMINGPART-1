@@ -1,4 +1,4 @@
-package com.mycompany.prog5121part1;
+package com.mycompany.prog;
 
 import java.util.Scanner;
 
