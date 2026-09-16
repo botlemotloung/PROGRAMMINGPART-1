@@ -11,7 +11,7 @@ public class LoginTest {
 
     @BeforeEach
     public void setUp() {
-        // Valid baseline user used across most tests
+        // FIX: Initialized the global test user baseline so it is never null!
         login = new Login("kyl_1", "Ktp@100!", "+27834557896", "Kyle", "Walker");
     }
 
@@ -107,3 +107,4 @@ public class LoginTest {
         );
     }
 }
+
