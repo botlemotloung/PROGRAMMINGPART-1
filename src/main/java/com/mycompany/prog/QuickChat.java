@@ -12,6 +12,7 @@ public class QuickChat {
         System.out.println("=== Register ===");
         Login login;
         String registerResult;
+        String senderCell = "";
         do {
             System.out.print("First name: ");
             String first = scanner.nextLine().trim();
@@ -27,6 +28,7 @@ public class QuickChat {
             login = new Login(u, p, c, first, last);
             registerResult = login.registerUser();
             System.out.println(registerResult);
+            senderCell = c;
         } while (!registerResult.equals("User registered successfully."));
 
         System.out.println("\n=== Login ===");
@@ -43,6 +45,11 @@ public class QuickChat {
         // ---- QuickChat (only reachable after a successful login) ----
         System.out.println("\nWelcome to QuickChat.");
 
+        // The logged-in user's cell number is the sender of every message
+        Message.setDefaultSender(senderCell);
+        // Read any messages stored in earlier runs from the JSON file into the stored array
+        Message.loadStoredMessages();
+
         int maxMessages = readPositiveInt("How many messages do you wish to enter? ");
         int messagesEntered = 0;
 
@@ -51,6 +58,7 @@ public class QuickChat {
             System.out.println("\n1) Send Messages");
             System.out.println("2) Show recently sent messages");
             System.out.println("3) Quit");
+            System.out.println("4) Stored Messages");
             int option = readInt("Choose an option: ");
 
             switch (option) {
@@ -74,8 +82,59 @@ public class QuickChat {
                     System.out.println("Total messages sent: " + Message.returnTotalMessages());
                     System.out.println("Goodbye.");
                     break;
+                case 4:
+                    storedMessagesMenu();
+                    break;
                 default:
-                    System.out.println("Invalid option. Please choose 1, 2 or 3.");
+                    System.out.println("Invalid option. Please choose 1, 2, 3 or 4.");
+            }
+        }
+    }
+
+    /** Fourth main menu option: works with the stored messages array. */
+    private static void storedMessagesMenu() {
+        // Read the JSON file into the stored messages array
+        int loaded = Message.loadStoredMessages();
+        System.out.println("\n--- Stored Messages (" + loaded + " loaded from JSON file) ---");
+
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n1) Display the sender and recipient of all stored messages");
+            System.out.println("2) Display the longest stored message");
+            System.out.println("3) Search for a message ID");
+            System.out.println("4) Search for all messages for a particular recipient");
+            System.out.println("5) Delete a message using the message hash");
+            System.out.println("6) Display a report of all stored messages");
+            System.out.println("7) Back to main menu");
+            int choice = readInt("Choose an option: ");
+
+            switch (choice) {
+                case 1:
+                    System.out.println(Message.displaySenderAndRecipient());
+                    break;
+                case 2:
+                    System.out.println("Longest stored message: " + Message.longestStoredMessage());
+                    break;
+                case 3:
+                    System.out.print("Enter the message ID: ");
+                    System.out.println(Message.searchByMessageID(scanner.nextLine()));
+                    break;
+                case 4:
+                    System.out.print("Enter the recipient's cell number: ");
+                    System.out.println(Message.searchByRecipient(scanner.nextLine()));
+                    break;
+                case 5:
+                    System.out.print("Enter the message hash: ");
+                    System.out.println(Message.deleteMessageByHash(scanner.nextLine()));
+                    break;
+                case 6:
+                    System.out.println(Message.storedMessagesReport());
+                    break;
+                case 7:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose 1 to 7.");
             }
         }
     }

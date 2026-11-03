@@ -1,0 +1,20 @@
+[
+  {
+    "messageID": "5697709103",
+    "messageNumber": 1,
+    "messageHash": "56:1:WHERETIME",
+    "recipient": "+27838884567",
+    "message": "Where are you? You are late! I have asked you to be on time.",
+    "sender": "+27718693002",
+    "flag": "Stored"
+  },
+  {
+    "messageID": "0998575164",
+    "messageNumber": 3,
+    "messageHash": "09:3:OKYOU",
+    "recipient": "+27838884567",
+    "message": " Ok, I am leaving without you.",
+    "sender": "+27718693002",
+    "flag": "Stored"
+  }
+]
